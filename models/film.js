@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const filmSchema = new mongoose.Schema({
   title: {
@@ -12,12 +11,34 @@ const filmSchema = new mongoose.Schema({
   genre: {
     type: String
   },
-  rating: {
-    type: Number
-  },
   runtime: {
     type: String
   },
+  imdbRating: {
+    type: Number,
+    min: 0,
+    max: 10
+  },
+  rtRating: {
+    type: Number,
+    min: 0,
+    max: 100
+  },
+  mikellyRating: {
+    type: Number,
+    min: 0,
+    max: 10,
+    default: 0
+  },
+  watched: {
+    type: Boolean,
+    default: false
+  },
+  comments: {
+    type: String,
+    default: ' '
+  }
+
   // movieImage: {
   //   type: Buffer,
   //   required: true
@@ -26,9 +47,7 @@ const filmSchema = new mongoose.Schema({
   //   type: String,
   //   required: true
   // }
-})
-
-filmSchema.plugin(AutoIncrement, { inc_field: 'id' });
+});
 
 // filmSchema.virtual('moviePoster').get(function () {
 //   if (this.movieImage != null && this.movieImageType != null) {

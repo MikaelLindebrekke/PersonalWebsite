@@ -11,10 +11,13 @@
   <input type="text" name="genre" value="<%= film.genre%>">
 </div>
 <div>
-  <label>Rating</label>
-  <input type="number" name="rating" value="<%= film.rating%>" step=".01">
-</div>
-<div>
   <label>Runtime</label>
   <input type="text" name="runtime" value="<%= film.runtime%>">
+</div>
+  <label>IMDB Rating</label>
+  <input type="number" name="imdbRating" value="<%= film.imdbRating%>" step=".01" min="0" max="10">
+</div>
+<div>
+  <label>Rotten Tomatoes Rating</label>
+  <input type="number" name="rtRating" value="<%= film.rtRating%>" step=".01" min="0" max="100">
 </div>

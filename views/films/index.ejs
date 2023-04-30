@@ -1,4 +1,4 @@
-<h2>Films</h2>
+<h1>Films</h1>
 
 <a href="/films/new">Add new Film</a>
 
@@ -12,5 +12,10 @@
 <br>
 
 <% films.forEach(film => { %>
-  <div> <%= film.title %> </div>
+  <div><%= film.title %></div>
+  <div>
+    <a href="/films/<%= film.id%>">View</a>
+    <a href="/films/<%= film.id%>/edit">Edit</a>
+    <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
+  </div>
 <% }) %>

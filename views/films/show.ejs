@@ -1,0 +1,42 @@
+<h2>Film Details</h2>
+<div>
+  <div>Title: </div>
+  <div><%= film.title %></div>
+</div>
+<div>
+  <div>Released: </div>
+  <div><%= film.released %></div>
+</div>
+<div>
+  <div>Genre: </div>
+  <div><%= film.genre %></div>
+</div>
+<div>
+  <div>Runtime: </div>
+  <div><%= film.runtime %></div>
+</div>
+<div>
+  <div>IMDB Rating: </div>
+  <div><%= film.imdbRating %></div>
+</div>
+<div>
+  <div>Rotten Tomatoes Rating: </div>
+  <div><%= film.rtRating %></div>
+</div>
+<div>
+  <div>Mikelly Rating: </div>
+  <div><%= film.mikellyRating %></div>
+</div>
+<div>
+  <div>Watched: </div>
+  <div><%= film.watched %></div>
+</div>
+<div>
+  <div>Comments: </div>
+  <div><%= film.comments %></div>
+</div>
+
+<div>
+  <a href="/films/<%= film.id%>/edit">Edit</a>
+  <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
+</div>
