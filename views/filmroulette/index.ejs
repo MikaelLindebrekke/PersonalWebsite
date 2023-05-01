@@ -1,1 +1,7 @@
 <h2> Film Roulette</h2>
+
+<div> <%= choosenFilm.title %></div>
+<br>
+<% allFilms.forEach(film => { %>
+  <div><%= film.title %></div>
+<% }) %>
