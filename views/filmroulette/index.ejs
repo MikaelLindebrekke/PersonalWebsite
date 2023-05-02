@@ -1,7 +1,19 @@
 <h2> Film Roulette</h2>
 
-<div> <%= choosenFilm.title %></div>
-<br>
-<% allFilms.forEach(film => { %>
-  <div><%= film.title %></div>
-<% }) %>
+<form action="/filmroulette/spin" method="GET">
+  <label>Press button to spin the roulette</label>
+  <button type="submit">Spin!</button>
+</form>
+<% if (locals.errorMessage != null) {%>
+  <div class="error-message">
+    <%=errorMessage  %>
+  </div> 
+<% } %>
+
+<h4>Films that are currently not watched</h3>
+  <ul>
+    <% allFilms.forEach(film => { %>
+      <li><%= film.title %></li>
+      <div><a href="/films/<%= film.id%>">View Info</a></div>
+    <% }) %>
+  </ul>

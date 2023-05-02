@@ -1,24 +1,55 @@
 const express = require('express');
 const router = express.Router();
 const Film = require('../models/film');
-const FilmRoulette = require('../models/filmRoulette')
+const Roulette = require('../models/rouletteLogic')
 
 // All films
 router.get('/', async (req, res) => {
-  let emptyFilter = {};
   try {
-    const allFilms = await Film.find(emptyFilter);
-    console.log('Spinning');
-    const choosenFilm = FilmRoulette.spin(allFilms)
-    console.log(choosenFilm);
+    const allFilms = await Film.find({ watched: 'false' }).exec();
     res.render('filmroulette/index', {
-      allFilms: allFilms,
-      choosenFilm: choosenFilm
+      allFilms: allFilms
     });
 
   } catch {
-    console.log('Didnt work')
     res.redirect('/');
+  }
+})
+
+router.get('/spin', async (req, res) => {
+  try {
+    const allFilms = await Film.find({ watched: 'false' }).exec();
+    if (allFilms.length != 0) {
+      const choosenFilm = Roulette.spin(allFilms)
+      res.render('filmroulette/spin', {
+        allFilms: allFilms,
+        choosenFilm: choosenFilm
+      });
+    } else {
+      const errorMessage = 'All films are watched. Add new films to spin the roulette.'
+      res.render('filmroulette/index', {
+        allFilms: allFilms,
+        errorMessage: errorMessage
+      })
+    }
+
+  } catch {
+    console.log('Didnt work')
+    res.redirect('filmroulette/index');
+  }
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const choosenFilm = await Film.findById(req.params.id);
+    choosenFilm.watched = true;
+    choosenFilm.save();
+    res.render('filmroulette/watch', {
+      choosenFilm: choosenFilm
+    })
+  } catch {
+    console.log('Failed')
+    res.redirect('spin');
   }
 })
 

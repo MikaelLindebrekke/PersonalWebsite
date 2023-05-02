@@ -38,17 +38,11 @@ router.post('/', async (req, res) => {
     imdbRating: req.body.imdbRating,
     rtRating: req.body.rtRating
   });
-  //
-  console.log('Created film: ' + film);
 
   try {
     const newFilm = await film.save();
-    // 
-    console.log('Saved successfully.');
     res.redirect('films');
   } catch {
-    // 
-    console.log('Error saving ' + film.title);
     res.render('films/new', {
       film: film,
       errorMessage: 'Error creating Film'
@@ -99,9 +93,6 @@ router.put('/:id', async (req, res) => {
     }
     film.comments = req.body.comments;
     await film.save();
-    //
-    console.log('film updated!');
-
     res.redirect(`/films/${film.id}`);
   } catch {
     if (film != null) {
