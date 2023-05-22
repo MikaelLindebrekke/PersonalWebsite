@@ -6,21 +6,7 @@ const imageMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 
 // All films route
 router.get('/', async (req, res) => {
-
-  let searchOptions = {};
-  if (req.query.title != null && req.query.title !== '') {
-    searchOptions.title = new RegExp(req.query.title, 'i');
-  }
-  try {
-    const films = await Film.find(searchOptions);
-    res.render('films/index', {
-      films: films,
-      searchOptions: req.query
-    });
-
-  } catch {
-    res.redirect('/');
-  }
+  res.redirect('/filmroulette/films');
 })
 
 // New film Route
@@ -44,7 +30,7 @@ router.post('/', async (req, res) => {
     res.redirect('films');
   } catch {
     res.render('films/new', {
-      film: film,
+      film: newFilm,
       errorMessage: 'Error creating Film'
     });
   }

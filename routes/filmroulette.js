@@ -1,14 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const Film = require('../models/film');
-const Roulette = require('../models/rouletteLogic')
+const Roulette = require('../logic/roulette');
+const Middleware = require("../logic/middleware");
 
 // All films
-router.get('/', async (req, res) => {
+router.get('/', Middleware.checkAuthenticated, async (req, res) => {
   try {
     const allFilms = await Film.find({ watched: 'false' }).exec();
     res.render('filmroulette/index', {
       allFilms: allFilms
+    });
+
+  } catch {
+    res.redirect('/');
+  }
+})
+
+// All films route
+router.get('/films', async (req, res) => {
+
+  let searchOptions = {};
+  if (req.query.title != null && req.query.title !== '') {
+    searchOptions.title = new RegExp(req.query.title, 'i');
+  }
+  try {
+    const films = await Film.find(searchOptions);
+    res.render('films/index', {
+      films: films,
+      searchOptions: req.query
     });
 
   } catch {

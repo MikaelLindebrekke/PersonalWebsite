@@ -10,4 +10,4 @@ function getRandomNumber(upperBound) {
   return Math.floor(Math.random() * upperBound);
 }
 
-exports.spin = array => spin(array);
+module.exports.spin = array => spin(array);
