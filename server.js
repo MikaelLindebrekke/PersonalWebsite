@@ -13,14 +13,9 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 
-
 // Setup Passport
 const initializePassport = require('./logic/passport-local-config');
-initializePassport(
-  passport,
-  email => users.find(user => user.email === email), // Må få tak i brukernavn fra databasen her?
-  id => users.find(user => user.id === id)
-)
+initializePassport(passport);
 
 // Set all routers
 const indexRouter = require('./routes/index');

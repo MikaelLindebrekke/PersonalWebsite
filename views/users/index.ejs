@@ -8,6 +8,11 @@
   <a href="users/register">Register</a>
 </div>
 
-<!-- <form action="/logout?_method=DELETE" method="POST">
-  <button type="submit">Log out</button>
-</form> -->
+<h4>Showing all users currently registered for test purposes - DELETE BEFORE RELEASE</h4>
+<ul>
+  <% allUsers.forEach(user => { %>
+    <li> <%= user.displayname %></li>
+    <a href="/users/<%= user.id%>">View</a>
+    <%- include('../partials/deleteForm.ejs', { url: `/users/${user.id}`}) %>
+  <% }) %>
+</ul>
