@@ -1,28 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const Film = require('../models/film');
+const Middleware = require("../logic/middleware");
 const imageMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 
 
 // All films route
-router.get('/', async (req, res) => {
+router.get('/', Middleware.checkAuthenticated, async (req, res) => {
   res.redirect('/filmroulette/films');
 })
 
 // New film Route
-router.get('/new', (req, res) => {
+router.get('/new', Middleware.checkAuthenticated, (req, res) => {
   res.render('films/new', { film: new Film() });
 })
 
 // Create new Film
-router.post('/', async (req, res) => {
+router.post('/', Middleware.checkAuthenticated, async (req, res) => {
+
   const film = new Film({
     title: req.body.title,
     released: req.body.released,
     genre: req.body.genre,
     runtime: req.body.runtime,
     imdbRating: req.body.imdbRating,
-    rtRating: req.body.rtRating
+    rtRating: req.body.rtRating,
+    user: req.body.user // <- This does not exist as of now...
   });
 
   try {
@@ -37,7 +40,7 @@ router.post('/', async (req, res) => {
 })
 
 // Show film
-router.get('/:id', async (req, res) => {
+router.get('/:id', Middleware.checkAuthenticated, async (req, res) => {
   try {
     const film = await Film.findById(req.params.id);
     res.render('films/show', {
@@ -49,7 +52,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Edit Film
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', Middleware.checkAuthenticated, async (req, res) => {
   try {
     const film = await Film.findById(req.params.id);
     res.render('films/edit', {
@@ -61,7 +64,7 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 // Update Film
-router.put('/:id', async (req, res) => {
+router.put('/:id', Middleware.checkAuthenticated, async (req, res) => {
   let film;
   try {
     film = await Film.findById(req.params.id);
@@ -78,6 +81,7 @@ router.put('/:id', async (req, res) => {
       film.watched = false;
     }
     film.comments = req.body.comments;
+    film.user = req.body.user;
     await film.save();
     res.redirect(`/films/${film.id}`);
   } catch {
@@ -92,7 +96,7 @@ router.put('/:id', async (req, res) => {
 
 
 // Delete Film
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', Middleware.checkAuthenticated, async (req, res) => {
   let film;
 
   try {

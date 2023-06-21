@@ -12,10 +12,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
-
-// Setup Passport
-const initializePassport = require('./logic/passport-local-config');
-initializePassport(passport);
+const Middleware = require("./logic/middleware");
 
 // Set all routers
 const indexRouter = require('./routes/index');
@@ -27,11 +24,15 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 
+// Setup Passport
+const initializePassport = require('./logic/passport-local-config');
+initializePassport(passport);
 
 // Set all use functions for app.
 app.use(expressLayouts);
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
+app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(flash());
 app.use(session({
@@ -41,6 +42,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Middelware
+app.use(Middleware.setUserMiddleware);
 
 // Set up database connection
 const mongoose = require('mongoose');

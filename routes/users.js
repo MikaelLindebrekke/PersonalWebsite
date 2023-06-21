@@ -5,12 +5,8 @@ const passport = require('passport');
 const User = require('../models/user');
 const Middleware = require("../logic/middleware");
 
-// router.get('/', Middleware.checkAuthenticated, (req, res) => {
-//   res.render('users');
-// })
-
 // Index Page for users
-router.get('/', async (req, res) => {
+router.get('/', Middleware.checkNotAuthenticated, async (req, res) => {
   try {
     const allUsers = await User.find().exec();
     res.render('users/index', {
@@ -23,21 +19,22 @@ router.get('/', async (req, res) => {
 })
 
 // Login page
-router.get('/login', (req, res) => {
+router.get('/login', Middleware.checkNotAuthenticated, (req, res) => {
   res.render('users/login');
 })
 
-router.post('/login', passport.authenticate('local', {
+
+router.post('/login', Middleware.checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/filmroulette',
   failureRedirect: '/users/login',
   failureFlash: true
 }))
 
-router.get('/register', (req, res) => {
+router.get('/register', Middleware.checkNotAuthenticated, (req, res) => {
   res.render('users/register');
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', Middleware.checkNotAuthenticated, async (req, res) => {
   let user;
   try {
     // 10 refers to the strengt of the hash. The bigger the number the stronger the hash. 
@@ -50,13 +47,25 @@ router.post('/register', async (req, res) => {
       password: hashPassword
     })
     await user.save();
-    console.log('Saved user: ' + user)
     res.render('users/login');
   } catch {
-    console.log('Did not save ' + user.username)
     res.render('users/register');
   }
 })
+
+// Logout User
+router.delete('/logout', Middleware.checkAuthenticated, (req, res) => {
+  req.logOut(error => {
+    if (error) {
+      return next(error);
+    }
+    res.render('users/login')
+  });
+})
+
+
+
+// ******** REMOVE ******************************
 
 // Show user
 router.get('/:id', async (req, res) => {
@@ -68,16 +77,6 @@ router.get('/:id', async (req, res) => {
   } catch {
     res.redirect('/');
   }
-})
-
-// Logout User
-router.delete('/logout', (req, res) => {
-  req.logOut(error => {
-    if (error) {
-      return next(error);
-    }
-    res.render('users/login')
-  });
 })
 
 // Delete User
@@ -97,7 +96,7 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-
+// ******** REMOVE ******************************
 
 
 module.exports = router;

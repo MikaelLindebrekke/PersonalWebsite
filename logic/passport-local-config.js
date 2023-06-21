@@ -24,8 +24,14 @@ function initialize(passport) {
 
   passport.use(new LocalStrategy(authenticateUser))
   passport.serializeUser((user, completed) => completed(null, user.id));
-  passport.deserializeUser((id, completed) => {
-    return completed(null, User.findById(id))
+  passport.deserializeUser(async (id, completed) => {
+    try {
+      // Assuming you have a User model and can retrieve a user by its id
+      const user = await User.findById(id);
+      completed(null, user);
+    } catch (error) {
+      completed(error, null);
+    }
   });
 }
 
