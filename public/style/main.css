@@ -1,0 +1,32 @@
+@import 'shared/fonts.css';
+@import 'shared/buttons.css';
+
+:root {
+  font-family: 'Fjalla';
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+.inner-container {
+  margin: 0 2rem;
+}
+
+body {
+  background: linear-gradient(to bottom, #b4eecb, #f5c182);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}

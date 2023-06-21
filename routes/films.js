@@ -62,7 +62,6 @@ router.post('/add/:id', Middleware.checkAuthenticated, async (req, res) => {
   try {
     const addFilm = await Film.findById(req.params.id);
 
-    console.log('Found film: ' + addFilm)
     const film = new Film({
       title: addFilm.title,
       released: addFilm.released,
@@ -73,7 +72,6 @@ router.post('/add/:id', Middleware.checkAuthenticated, async (req, res) => {
       user: req.user.id
     });
     await film.save();
-    console.log('Saved!')
     res.redirect('/filmroulette/films');
   } catch {
     res.redirect('films/archive');

@@ -114,41 +114,9 @@ router.delete('/logout', Middleware.checkAuthenticated, (req, res) => {
     if (error) {
       return next(error);
     }
-    res.render('filmroulette/login')
+    res.redirect('/filmroulette/login');
   });
 })
-
-// // ******** REMOVE ******************************
-// // Show user
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     res.render('filmroulette/show', {
-//       user: user
-//     })
-//   } catch {
-//     res.redirect('/');
-//   }
-// })
-
-// // Delete User
-// router.delete('/:id', async (req, res) => {
-//   let user;
-
-//   try {
-//     user = await User.findById(req.params.id);
-//     await user.deleteOne();
-//     res.redirect('/filmroulette');
-//   } catch {
-//     if (user == null) {
-//       res.redirect('/');
-//     } else {
-//       res.redirect(`/filmroulette/${user.id}`);
-//     }
-//   }
-// })
-// // ******** REMOVE ******************************
-
 
 // ******************* User handling *******************
 

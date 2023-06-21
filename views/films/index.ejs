@@ -1,6 +1,9 @@
 <h2>Film Archive</h2>
 
 <div>
+  <a href="/filmroulette">Film Roulette</a>
+</div>
+<div>
   <a href="/films/new">Add new Film</a>
 </div>
 <div>
@@ -24,3 +27,5 @@
     <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
   </div>
 <% }) %>
+
+<%- include('../partials/userInfo.ejs') %>
