@@ -1,0 +1,23 @@
+.film-grid {
+  display: grid;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.film-details {
+  display: flex;
+}
+
+.film-details-label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  align-self: flex-start;
+}
+
+.film-details-grid {
+  display: grid;
+  align-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: auto auto;
+}

@@ -1,8 +1,10 @@
 @import 'shared/fonts.css';
 @import 'shared/buttons.css';
+@import 'shared/film.css';
 
 :root {
   font-family: 'Fjalla';
+  font-size: x-large;
 }
 
 html, body {

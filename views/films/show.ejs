@@ -1,45 +1,28 @@
 <h2>Film Details</h2>
-<div>
-  <div>Title: </div>
-  <div><%= film.title %></div>
-</div>
-<div>
-  <div>Released: </div>
-  <div><%= film.released %></div>
-</div>
-<div>
-  <div>Genre: </div>
-  <div><%= film.genre %></div>
-</div>
-<div>
-  <div>Runtime: </div>
-  <div><%= film.runtime %></div>
-</div>
-<div>
-  <div>IMDB Rating: </div>
-  <div><%= film.imdbRating %></div>
-</div>
-<div>
-  <div>Rotten Tomatoes Rating: </div>
-  <div><%= film.rtRating %></div>
-</div>
-<div>
-  <div>Mikelly Rating: </div>
-  <div><%= film.mikellyRating %></div>
-</div>
-<div>
-  <div>Watched: </div>
-  <div><%= film.watched %></div>
-</div>
-<div>
-  <div>Comments: </div>
-  <div><%= film.comments %></div>
-</div>
-
-<div>
-  <a href="/films/<%= film.id%>/edit">Edit</a>
-  <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
-  <a href="/filmroulette/films">Return to overview</a>
+<div class="film-details">
+  <div class="film-details-grid"> 
+    <div class="film-details-label">Title: </div>
+    <div><%= film.title %></div>
+    <div class="film-details-label">Released: </div>
+    <div><%= film.released %></div>
+    <div class="film-details-label">Genre: </div>
+    <div><%= film.genre %></div>
+    <div class="film-details-label">Runtime: </div>
+    <div><%= film.runtime %></div>
+    <div class="film-details-label">IMDB Rating: </div>
+    <div><%= film.imdbRating %></div>
+    <div class="film-details-label">Rotten Tomatoes Rating: </div>
+    <div><%= film.rtRating %></div>
+    <div class="film-details-label">Mikelly Rating: </div>
+    <div><%= film.mikellyRating %></div>
+    <div class="film-details-label">Watched: </div>
+    <div> <% if (film.watched) { %> Yes <% } else { %>  No  <% } %></div>
+    <div class="film-details-label">Comments: </div>
+    <div><%= film.comments %></div>
+    <a href="/films/<%= film.id%>/edit">Edit</a>
+    <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
+    <a href="/filmroulette/films">Return to overview</a>
+  </div>
 </div>
 
 <%- include('../partials/userInfo.ejs') %>
