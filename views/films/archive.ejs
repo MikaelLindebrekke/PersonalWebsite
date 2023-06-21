@@ -4,7 +4,7 @@
   <a href="/films/new">Add new Film</a>
 </div>
 <div>
-  <a href="/films/archive">See Films added by other users</a>
+  <a href="/films">See your Films</a>
 </div>
 
 <h3>Search Films</h3>
@@ -14,13 +14,14 @@
   <button type="submit">Search</button>
 </form>
 
-<br>
-
 <% films.forEach(film => { %>
   <div><%= film.title %></div>
   <div>
     <a href="/films/<%= film.id%>">View</a>
-    <a href="/films/<%= film.id%>/edit">Edit</a>
-    <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
+  </div>
+  <div>
+    <form action="/films/add/<%= film.id%>" method="POST">
+      <button type="submit">Add to your Archive</button>
+    </form>
   </div>
 <% }) %>

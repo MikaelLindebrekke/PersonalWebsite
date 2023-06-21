@@ -10,6 +10,25 @@ router.get('/', Middleware.checkAuthenticated, async (req, res) => {
   res.redirect('/filmroulette/films');
 })
 
+router.get('/archive', Middleware.checkAuthenticated, async (req, res) => {
+
+  let searchOptions = {};
+  if (req.query.title != null && req.query.title !== '') {
+    searchOptions.title = new RegExp(req.query.title, 'i');
+  }
+  try {
+    const films = await Film.find(searchOptions);
+    res.render('films/archive', {
+      films: films,
+      searchOptions: req.query
+    });
+
+  } catch {
+    console.log('Error with getting archive')
+    res.redirect('/filmroulette');
+  }
+})
+
 // New film Route
 router.get('/new', Middleware.checkAuthenticated, (req, res) => {
   res.render('films/new', { film: new Film() });
@@ -29,13 +48,35 @@ router.post('/', Middleware.checkAuthenticated, async (req, res) => {
   });
   try {
     const newFilm = await film.save();
-    console.log(newFilm)
     res.redirect('films');
   } catch {
     res.render('films/new', {
       film: newFilm,
       errorMessage: 'Error creating Film'
     });
+  }
+})
+
+// Creates a new film and adds it to the archive of the logged in user
+router.post('/add/:id', Middleware.checkAuthenticated, async (req, res) => {
+  try {
+    const addFilm = await Film.findById(req.params.id);
+
+    console.log('Found film: ' + addFilm)
+    const film = new Film({
+      title: addFilm.title,
+      released: addFilm.released,
+      genre: addFilm.genre,
+      runtime: addFilm.runtime,
+      imdbRating: addFilm.imdbRating,
+      rtRating: addFilm.rtRating,
+      user: req.user.id
+    });
+    await film.save();
+    console.log('Saved!')
+    res.redirect('/filmroulette/films');
+  } catch {
+    res.redirect('films/archive');
   }
 })
 

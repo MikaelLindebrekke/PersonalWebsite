@@ -35,7 +35,7 @@ router.get('/films', Middleware.checkAuthenticated, async (req, res) => {
     });
 
   } catch {
-    res.redirect('/');
+    res.redirect('/filmroulette');
   }
 })
 
