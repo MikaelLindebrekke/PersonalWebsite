@@ -8,13 +8,14 @@ const Middleware = require("../logic/middleware");
 // All films
 router.get('/', Middleware.checkAuthenticated, async (req, res) => {
   try {
-    const allFilms = await Film.find({ watched: 'false', user: req.body.user }).exec();
+    const unwatchedFilmsForUser = await Film.find({ watched: 'false', user: req.user.id }).exec();
 
     res.render('filmroulette/index', {
-      allFilms: allFilms
+      allFilms: unwatchedFilmsForUser
     });
 
   } catch {
+    console.log('Error with getting index')
     res.redirect('/');
   }
 });
@@ -27,7 +28,7 @@ router.get('/films', Middleware.checkAuthenticated, async (req, res) => {
     searchOptions.title = new RegExp(req.query.title, 'i');
   }
   try {
-    const films = await Film.find(searchOptions);
+    const films = await Film.find({ user: req.user.id }, searchOptions);
     res.render('films/index', {
       films: films,
       searchOptions: req.query
@@ -40,17 +41,17 @@ router.get('/films', Middleware.checkAuthenticated, async (req, res) => {
 
 router.get('/spin', Middleware.checkAuthenticated, async (req, res) => {
   try {
-    const allFilms = await Film.find({ watched: 'false', user: req.body.user }).exec();
-    if (allFilms.length != 0) {
-      const choosenFilm = Roulette.spin(allFilms)
+    const unwatchedFilmsForUser = await Film.find({ watched: 'false', user: req.user.id }).exec();
+    if (unwatchedFilmsForUser.length != 0) {
+      const choosenFilm = Roulette.spin(unwatchedFilmsForUser)
       res.render('filmroulette/spin', {
-        allFilms: allFilms,
+        allFilms: unwatchedFilmsForUser,
         choosenFilm: choosenFilm
       });
     } else {
       const errorMessage = 'All films are watched. Add new films to spin the roulette.'
       res.render('filmroulette/index', {
-        allFilms: allFilms,
+        allFilms: unwatchedFilmsForUser,
         errorMessage: errorMessage
       })
     }

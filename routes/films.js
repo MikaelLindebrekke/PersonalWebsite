@@ -25,11 +25,11 @@ router.post('/', Middleware.checkAuthenticated, async (req, res) => {
     runtime: req.body.runtime,
     imdbRating: req.body.imdbRating,
     rtRating: req.body.rtRating,
-    user: req.body.user // <- This does not exist as of now...
+    user: req.user.id
   });
-
   try {
     const newFilm = await film.save();
+    console.log(newFilm)
     res.redirect('films');
   } catch {
     res.render('films/new', {
@@ -81,7 +81,6 @@ router.put('/:id', Middleware.checkAuthenticated, async (req, res) => {
       film.watched = false;
     }
     film.comments = req.body.comments;
-    film.user = req.body.user;
     await film.save();
     res.redirect(`/films/${film.id}`);
   } catch {
