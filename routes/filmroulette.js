@@ -1,28 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const Film = require('../models/film');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const User = require('../models/user');
 const Roulette = require('../logic/roulette');
 const Middleware = require("../logic/middleware");
 
 
-// All films
+// Index page 
 router.get('/', Middleware.checkAuthenticated, async (req, res) => {
-  try {
-    const unwatchedFilmsForUser = await Film.find({ watched: 'false', user: req.user.id }).exec();
-
-    res.render('filmroulette/index', {
-      allFilms: unwatchedFilmsForUser
-    });
-
-  } catch {
-    console.log('Error with getting index')
-    res.redirect('/');
-  }
+  const unwatchedFilmsForUser = await Film.find({ watched: 'false', user: req.user.id }).exec();
+  res.render('filmroulette/index', {
+    allFilms: unwatchedFilmsForUser
+  });
 });
 
-// All films route
+// View all films in users archive
 router.get('/films', Middleware.checkAuthenticated, async (req, res) => {
-
   let searchOptions = {};
   if (req.query.title != null && req.query.title !== '') {
     searchOptions.title = new RegExp(req.query.title, 'i');
@@ -34,11 +29,12 @@ router.get('/films', Middleware.checkAuthenticated, async (req, res) => {
       searchOptions: req.query
     });
 
-  } catch {
+  } catch (err) {
     res.redirect('/filmroulette');
   }
 })
 
+// Spins the roulette to select a film.
 router.get('/spin', Middleware.checkAuthenticated, async (req, res) => {
   try {
     const unwatchedFilmsForUser = await Film.find({ watched: 'false', user: req.user.id }).exec();
@@ -61,7 +57,8 @@ router.get('/spin', Middleware.checkAuthenticated, async (req, res) => {
   }
 })
 
-router.get('/:id', Middleware.checkAuthenticated, async (req, res) => {
+// Mark a selected film as watched 
+router.get('/watch/:id', Middleware.checkAuthenticated, async (req, res) => {
   try {
     const choosenFilm = await Film.findById(req.params.id);
     choosenFilm.watched = true;
@@ -73,6 +70,88 @@ router.get('/:id', Middleware.checkAuthenticated, async (req, res) => {
     res.redirect('spin');
   }
 })
+
+// Login page
+router.get('/login', Middleware.checkNotAuthenticated, (req, res) => {
+  res.render('filmroulette/login');
+})
+
+// Login action
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/filmroulette',
+  failureRedirect: '/filmroulette/login',
+  failureFlash: true
+}))
+
+// Register page
+router.get('/register', Middleware.checkNotAuthenticated, (req, res) => {
+  res.render('filmroulette/register');
+})
+
+// Register action
+router.post('/register', Middleware.checkNotAuthenticated, async (req, res) => {
+  let user;
+  try {
+    // 10 refers to the strengt of the hash. The bigger the number the stronger the hash. 
+    // But it will also take longe time to hash. 
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    console.log('Hashed password: ' + hashPassword)
+    user = new User({
+      displayname: req.body.displayname,
+      username: req.body.username,
+      password: hashPassword
+    })
+    await user.save();
+    res.render('filmroulette/login');
+  } catch {
+    res.render('filmroulette/register');
+  }
+})
+
+// Logout action
+router.delete('/logout', Middleware.checkAuthenticated, (req, res) => {
+  req.logOut(error => {
+    if (error) {
+      return next(error);
+    }
+    res.render('filmroulette/login')
+  });
+})
+
+// // ******** REMOVE ******************************
+// // Show user
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     res.render('filmroulette/show', {
+//       user: user
+//     })
+//   } catch {
+//     res.redirect('/');
+//   }
+// })
+
+// // Delete User
+// router.delete('/:id', async (req, res) => {
+//   let user;
+
+//   try {
+//     user = await User.findById(req.params.id);
+//     await user.deleteOne();
+//     res.redirect('/filmroulette');
+//   } catch {
+//     if (user == null) {
+//       res.redirect('/');
+//     } else {
+//       res.redirect(`/filmroulette/${user.id}`);
+//     }
+//   }
+// })
+// // ******** REMOVE ******************************
+
+
+// ******************* User handling *******************
+
 
 
 module.exports = router;

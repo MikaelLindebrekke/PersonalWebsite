@@ -18,7 +18,6 @@ const Middleware = require("./logic/middleware");
 const indexRouter = require('./routes/index');
 const filmRouletteRouter = require('./routes/filmroulette');
 const filmRouter = require('./routes/films');
-const userRouter = require('./routes/users');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -58,6 +57,5 @@ db.on('open', () => console.log('Connected to Mongoose'));
 app.use('/', indexRouter);
 app.use('/filmroulette', filmRouletteRouter);
 app.use('/films', filmRouter);
-app.use('/users', userRouter);
 
 app.listen(process.env.PORT || 3000);

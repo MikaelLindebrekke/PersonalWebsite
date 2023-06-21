@@ -3,7 +3,7 @@
 <div> Selected film: </div>
 <div> <%= choosenFilm.title %></div>
 
-<div><a href="/filmroulette/<%= choosenFilm.id%>">Watch!</a></div>
+<div><a href="/filmroulette/watch/<%= choosenFilm.id%>">Watch!</a></div>
 
 <form action="/filmroulette/spin" method="GET">
   <button type="submit">Retry!</button>

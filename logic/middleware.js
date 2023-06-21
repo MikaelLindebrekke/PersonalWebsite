@@ -5,7 +5,7 @@ function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/users');
+  res.redirect('/filmroulette/login');
 }
 
 // To be used where you do not need to be authenticated to access. 

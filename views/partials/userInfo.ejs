@@ -1,0 +1,10 @@
+<div>
+  <% if (userExists) { %>
+    <h5>Currently logged in as: <%= user.displayname %> </h5>
+    <%- include('../partials/logoutForm.ejs') %>
+  <% } else { %>
+    <div>
+      <a href="users/login">Login</a>
+    </div>
+    <% } %>
+</div>
