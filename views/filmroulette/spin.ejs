@@ -1,7 +1,22 @@
 <h2>Spin results</h2>
 
-<div class="film-selected"> <%= choosenFilm.title %></div>
-
+<div class="film-details-overview">
+  <div class="film-details-grid"> 
+    <div class="film-details-label">Title: </div>
+    <div><%= choosenFilm.title %></div>
+    <div class="film-details-label">Released: </div>
+    <div><%= choosenFilm.released %></div>
+    <div class="film-details-label">Genre: </div>
+    <div><%= choosenFilm.genre %></div>
+    <div class="film-details-label">Runtime: </div>
+    <div><%= choosenFilm.runtime %></div>
+    <div class="film-details-label">IMDB Rating: </div>
+    <div><%= choosenFilm.imdbRating %></div>
+    <div class="film-details-label">Rotten Tomatoes Rating: </div>
+    <div><%= choosenFilm.rtRating %></div>
+  </div>
+</div>
+<br>
 <div class="btn-row">
   <a class="btn" href="/filmroulette/watch/<%= choosenFilm.id%>">Watch!</a>
   <form action="/filmroulette/spin" method="GET">
