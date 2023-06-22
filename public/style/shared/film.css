@@ -4,7 +4,7 @@
   gap: 2rem;
 }
 
-.film-details {
+.film-details-overview {
   display: flex;
 }
 
@@ -20,4 +20,31 @@
   align-items: center;
   gap: 1rem;
   grid-template-columns: auto auto;
+}
+
+.film-list {
+  padding: 0;
+}
+
+.film-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.film-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.film-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.film-selected {
+  margin: 20px;
+  font-size: 150%;
 }

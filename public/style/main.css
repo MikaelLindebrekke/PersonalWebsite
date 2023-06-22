@@ -1,6 +1,7 @@
 @import 'shared/fonts.css';
 @import 'shared/buttons.css';
 @import 'shared/film.css';
+@import 'shared/form.css';
 
 :root {
   font-family: 'Fjalla';
@@ -31,4 +32,12 @@ body {
   background: linear-gradient(to bottom, #b4eecb, #f5c182);
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+
+.user-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }

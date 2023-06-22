@@ -1,29 +1,30 @@
 <h2>Film Archive</h2>
 
-<div>
-  <a href="/films/new">Add new Film</a>
-</div>
-<div>
-  <a href="/films">See your Films</a>
+<div class="btn-column">
+  <div class="btn-column-element">
+    <a class="btn" href="/films/new">Add new Film</a>
+  </div>
+  <div class="btn-column-element">
+    <a class="btn" href="/films">See your Films</a>
+  </div>
 </div>
 
 <h3>Search Films</h3>
-<form action="/films" method="GET">
+<form action="/films/archive" method="GET">
   <label>Title</label>
   <input type="text" name="title" value="<%= searchOptions.title %>">
-  <button type="submit">Search</button>
+  <button class="btn" type="submit">Search</button>
 </form>
 
+<br>
 <% films.forEach(film => { %>
-  <div><%= film.title %></div>
-  <div>
-    <a href="/films/<%= film.id%>">View</a>
-  </div>
-  <div>
-    <form action="/films/add/<%= film.id%>" method="POST">
-      <button type="submit">Add to your Archive</button>
-    </form>
+  <div class="film-row">
+    <div class="film-title"><%= film.title %></div>
+    <div class="btn-row">
+      <a class="btn" href="/films/<%= film.id%>">View</a>
+      <%- include('../partials/addFilm.ejs', {id: `${film.id}`})  %>
+    </div>
   </div>
 <% }) %>
-
+    
 <%- include('../partials/userInfo.ejs') %>

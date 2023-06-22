@@ -1,0 +1,19 @@
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  width: 300px; /* Adjust the width of the label as needed */
+  margin-right: 10px;
+}
+
+.form-row input {
+  width: 150px; /* Set the input width to occupy all available space */
+}
+
+.form-row-end {
+  justify-content: flex-end;
+}

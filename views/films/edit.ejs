@@ -1,11 +1,11 @@
 <h2> Edit Film</h2>
 <form action="/films/<%=film.id%>?_method=PUT" method="POST">
   <%- include('_form_fields') %>
-  <div>
+  <div class="form-row">
     <label>Mikelly Rating</label>
     <input type="number" name="mikellyRating" value="<%= film.mikellyRating%>" step=".01" min="0" max="10">
   </div>
-  <div>
+  <div class="form-row">
     <label for="watched">Watched</label> 
     <% if (film.watched == false) { %>
       <input type="checkbox" name="watched">
@@ -13,12 +13,12 @@
       <input type="checkbox" name="watched" checked>
     <% } %>
   </div>
-  <div>
+  <div class="form-row">
     <label>Comments</label>
     <input type="text" name="comments" value="<%= film.comments%>">
   </div>
-  <a href="/films/<%= film.id%>">Cancel</a>
-  <button type="submit">Update</button>  
+  <a class="btn" href="/films/<%= film.id%>">Cancel</a>
+  <button class="btn" type="submit">Update</button>  
 </form>
 
 <%- include('../partials/userInfo.ejs') %>

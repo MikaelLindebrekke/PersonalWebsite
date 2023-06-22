@@ -1,23 +1,24 @@
-<div>
-  <label>Title</label>
-  <input type="text" name="title" value="<%= film.title%>">
+<div class="form-row">
+  <label >Title</label>
+  <input  type="text" name="title" value="<%= film.title%>">
 </div>
-<div>
-  <label>Released</label>
+<div class="form-row">
+  <label >Released</label>
   <input type="number" name="released" value="<%= film.released%>">
 </div>
-<div>
+<div class="form-row">
   <label>Genre</label>
   <input type="text" name="genre" value="<%= film.genre%>">
 </div>
-<div>
+<div class="form-row">
   <label>Runtime</label>
   <input type="text" name="runtime" value="<%= film.runtime%>">
 </div>
+<div class="form-row">
   <label>IMDB Rating</label>
   <input type="number" name="imdbRating" value="<%= film.imdbRating%>" step=".01" min="0" max="10">
 </div>
-<div>
+<div class="form-row">
   <label>Rotten Tomatoes Rating</label>
   <input type="number" name="rtRating" value="<%= film.rtRating%>" step=".01" min="0" max="100">
 </div>

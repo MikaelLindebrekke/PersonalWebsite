@@ -18,12 +18,14 @@ router.get('/', Middleware.checkAuthenticated, async (req, res) => {
 
 // View all films in users archive
 router.get('/films', Middleware.checkAuthenticated, async (req, res) => {
-  let searchOptions = {};
+  const searchOptions = { user: req.user.id };
+
   if (req.query.title != null && req.query.title !== '') {
     searchOptions.title = new RegExp(req.query.title, 'i');
   }
+
   try {
-    const films = await Film.find({ user: req.user.id }, searchOptions);
+    const films = await Film.find(searchOptions).exec();
     res.render('films/index', {
       films: films,
       searchOptions: req.query

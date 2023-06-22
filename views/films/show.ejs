@@ -1,5 +1,5 @@
 <h2>Film Details</h2>
-<div class="film-details">
+<div class="film-details-overview">
   <div class="film-details-grid"> 
     <div class="film-details-label">Title: </div>
     <div><%= film.title %></div>
@@ -19,9 +19,17 @@
     <div> <% if (film.watched) { %> Yes <% } else { %>  No  <% } %></div>
     <div class="film-details-label">Comments: </div>
     <div><%= film.comments %></div>
-    <a href="/films/<%= film.id%>/edit">Edit</a>
-    <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
-    <a href="/filmroulette/films">Return to overview</a>
+    <div class="btn-column">
+      <div class="btn-column-element"> 
+        <a class="btn" href="/films/<%= film.id%>/edit">Edit</a>
+      </div>
+      <div class="btn-column-element"> 
+        <%- include('../partials/deleteForm.ejs', { url: `/films/${film.id}`}) %>
+      </div>
+      <div class="btn-column-element"> 
+        <a class="btn" href="/filmroulette/films">Return to overview</a>
+      </div>
+    </div>
   </div>
 </div>
 

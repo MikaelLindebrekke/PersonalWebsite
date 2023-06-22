@@ -1,8 +1,11 @@
 <h2> Film Roulette</h2>
-<a href="/filmroulette/films">Film Archive</a>
+
+<a class="btn" href="/filmroulette/films">Film Archive</a>
+<br>
+<br>
 <form action="/filmroulette/spin" method="GET">
   <label>Press button to spin the roulette</label>
-  <button type="submit">Spin!</button>
+  <button class="btn" type="submit">Spin!</button>
 </form>
 <% if (locals.errorMessage != null) {%>
   <div class="error-message">
@@ -11,11 +14,18 @@
 <% } %>
 
 <h4>Films that are currently not watched</h3>
-  <ul>
-    <% allFilms.forEach(film => { %>
-      <li><%= film.title %></li>
-      <div><a href="/films/<%= film.id%>">View Info</a></div>
-    <% }) %>
-  </ul>
 
-  <%- include('../partials/userInfo.ejs') %>
+
+  <% allFilms.forEach(film => { %>
+    <div class="film-row">
+      <div class="film-title"> <%= film.title %></div>
+      <div >
+        <a class="btn btn-info" href="/films/<%= film.id%>">View Info</a>
+      </div>
+    </div>
+
+  <% }) %>
+
+
+<%- include('../partials/userInfo.ejs') %>
+
