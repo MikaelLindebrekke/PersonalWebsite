@@ -7,7 +7,6 @@ const imageMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 
 // All films route
 router.get('/', Middleware.checkAuthenticated, async (req, res) => {
-  console.log('Hiya from films route ' + req.query.title)
   res.redirect('/filmroulette/films');
 })
 
