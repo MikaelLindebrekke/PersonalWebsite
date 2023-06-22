@@ -3,18 +3,20 @@
 <p>Hi and welcome to the Film Roulette. If this is your first time here, please <a href="/filmroulette/register">register</a> to continue. </p>
 
 
-<% if (messages.error) { %>
-<%= messages.error %>
-<% } %>
 <form action="login" method="POST">
-  <div>
+  <div class="form-row-login">
     <label for="username">Username</label>
     <input type="text" id="username" name="username">
   </div>
-  <div>
+  <div class="form-row-login">
     <label for="password">Password</label>
     <input type="password" id="password" name="password">
   </div>
-  <button class="btn" type="submit">Login</button>
+  <% if (messages.error) { %>
+    <div class="error-message">
+      <%= messages.error %>
+    </div>
+  <% } %>
+  <button class="btn form-btn" type="submit">Login</button>
 </form>
 

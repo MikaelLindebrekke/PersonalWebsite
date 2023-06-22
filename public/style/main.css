@@ -41,3 +41,8 @@ body {
   padding: 20px;
   box-sizing: border-box;
 }
+
+.error-message {
+  font-weight: bold;
+  color: red;
+}

@@ -6,14 +6,35 @@
 }
 
 .form-row label {
-  width: 300px; /* Adjust the width of the label as needed */
+  width: 300px; 
   margin-right: 10px;
 }
 
 .form-row input {
-  width: 150px; /* Set the input width to occupy all available space */
+  width: 150px; 
 }
 
 .form-row-end {
   justify-content: flex-end;
+}
+
+.form-row-login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row-login label {
+  width: 130px; 
+  margin-right: 10px;
+}
+
+.form-row-login input {
+  width: 150px; 
+}
+
+.form-btn {
+  margin-top: 15px;
+  margin-left: 140px;
 }

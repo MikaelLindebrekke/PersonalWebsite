@@ -97,7 +97,6 @@ router.post('/register', Middleware.checkNotAuthenticated, async (req, res) => {
     // 10 refers to the strengt of the hash. The bigger the number the stronger the hash. 
     // But it will also take longe time to hash. 
     const hashPassword = await bcrypt.hash(req.body.password, 10);
-    console.log('Hashed password: ' + hashPassword)
     user = new User({
       displayname: req.body.displayname,
       username: req.body.username,
